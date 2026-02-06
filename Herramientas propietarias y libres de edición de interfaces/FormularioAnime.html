@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <title>Formulario de Anime</title>
+        <style>
+        :root{
+            --bg: #0f172a;           /* slate-900 */
+            --bg-soft: #111827;      /* gray-900 */
+            --card: #0b1224e6;       /* glassy */
+            --text: #e5e7eb;         /* gray-200 */
+            --muted: #9ca3af;        /* gray-400 */
+            --brand: #7c3aed;        /* violet-600 */
+            --brand-2: #22d3ee;      /* cyan-400 */
+            --line: #1f2937;         /* gray-800 */
+            --ok: #10b981;           /* emerald-500 */
+            --warn: #f59e0b;         /* amber-500 */
+            --radius-xl: 18px;
+            --radius-lg: 14px;
+            --shadow-1: 0 10px 30px rgba(0,0,0,.35);
+            --shadow-2: 0 6px 16px rgba(0,0,0,.25);
+            --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+            body{
+                margin:0;
+                font-family: var(--font);
+                color: var(--text);
+                background:
+                  radial-gradient(1200px 600px at 10% -10%, rgba(124,58,237,.25), transparent 60%),
+                  radial-gradient(1000px 600px at 110% 10%, rgba(34,211,238,.20), transparent 60%),
+                  linear-gradient(180deg, #0b1022 0%, var(--bg) 100%);
+            }
+            button{
+                color = white-space: inherit;
+            }
+        </style>
+    </head> 
+<body>
+
+    <h2>Datos del usuario</h2>
+
+    <label for="nombre">Nombre del usuario</label>
+    <input id="nombre" name="nombre" type="text"/>
+
+    <label for="edad">Edad</label>
+    <input id="edad" name="edad" type="number"/>
+
+    <label for="email">Correo electrónico</label>
+    <input id="email" name="email" type="email"/>
+
+    <label for="anime">Anime favorito</label>
+    <input 
+      list="animes" 
+      id="anime" 
+      name="anime" 
+      onchange="mostrarAnimeSeleccionado()"/>
+    <datalist id="animes">
+      <option value="Naruto">
+      <option value="One Piece">
+      <option value="Attack on Titan">
+      <option value="My Hero Academia">
+      <option value="Demon Slayer">
+      <option value="Jujutsu Kaisen">
+      <option value="Hunter x Hunter">
+      <option value="Fullmetal Alchemist">
+    </datalist>
+
+    <button type="submit">Enviar</button>
+    <script>
+    const AnimesPopulares = [
+      "Naruto",
+      "One Piece",
+      "Attack on Titan",
+      "Demon Slayer",
+      "My Hero Academia",
+      "Jujutsu Kaisen",
+      "Chainsaw Man",
+      "Tokyo Ghoul",
+      "Bleach",
+      "Dragon Ball Z",
+      "Hunter x Hunter",
+      "Fullmetal Alchemist",
+      "Death Note"
+    ];
+    const datalist = document.getElementById("animes");
+    for (let anime of listaAnimes) {
+      const option = document.createElement("option");
+      option.value = anime;
+      datalist.appendChild(option);
+    }
+
+  <script>
+    function mostrarAnimeSeleccionado() {
+      const anime = document.getElementById("anime").value;
+      if (anime.trim() !== "") {
+        alert(`Tu anime favorito es: ${anime}`);
+      }
+    }
+  </script>
+
+    </body>
+</html>

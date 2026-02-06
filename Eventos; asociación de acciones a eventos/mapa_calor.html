@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+<head>
+  <style>
+    #objetivo {
+      width: 400px;
+      height: 400px;
+      background: #f0f0f0;
+      border: 2px dashed #ccc;
+      position: relative;
+      margin-bottom: 20px;
+    }
+    #arrastrable {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(45deg, red, #ff6b6b);
+      border-radius: 8px;
+      position: absolute;
+      cursor: grab;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      transition: transform 0.1s;
+    }
+    #arrastrable:active {
+      cursor: grabbing;
+      transform: scale(1.05);
+    }
+    #controles {
+      margin: 10px 0;
+    }
+    .info {
+      background: #e3f2fd;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div id="objetivo">
+    <div id="arrastrable"></div>
+  </div>
+
+  <div id="controles">
+    <button ondblclick="alert('¡Has hecho doble click!')">Hazme doble click</button>
+    <span id="contador">Puntos registrados: 0</span>
+  </div>
+
+  <script>
+    let lienzo;
+    let mapadecalor = [];
+    const arrastrable = document.getElementById("arrastrable");
+    const objetivo = document.getElementById("objetivo");
+    let arrastrando = false;
+    let offsetX, offsetY;
+
+    arrastrable.addEventListener('mousedown', iniciarArrastre);
+    document.addEventListener('mousemove', manejarMovimiento);
+    document.addEventListener('mouseup', detenerArrastre);
+
+    function iniciarArrastre(e) {
+      arrastrando = true;
+      const rect = arrastrable.getBoundingClientRect();
+      offsetX = e.clientX - rect.left;
+      offsetY = e.clientY - rect.top;
+      arrastrable.style.cursor = 'grabbing';
+    }
+
+    function manejarMovimiento(e) {
+      registrarPuntoCalor(e.pageX, e.pageY);
+      
+      if(arrastrando) {
+        const rect = objetivo.getBoundingClientRect();
+        let x = e.clientX - rect.left - offsetX;
+        let y = e.clientY - rect.top - offsetY;
+        
+        x = Math.max(0, Math.min(rect.width - arrastrable.offsetWidth, x));
+        y = Math.max(0, Math.min(rect.height - arrastrable.offsetHeight, y));
+        
+        arrastrable.style.left = x + "px";
+        arrastrable.style.top = y + "px";
+      }
+    }
+
+    function detenerArrastre() {
+      arrastrando = false;
+      arrastrable.style.cursor = 'grab';
+    }
+
+    function registrarPuntoCalor(x, y) {
+      mapadecalor.push([x, y]);
+      document.getElementById('contador').textContent = "Puntos registrados: " + mapadecalor.length;
+    }
+
+    document.addEventListener('click', function(e) {
+      if(e.target.tagName !== 'BUTTON') {
+        visualizarMapaCalor();
+      }
+    });
+
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      limpiarMapaCalor();
+    });
+
+    function visualizarMapaCalor() {
+      if(lienzo) lienzo.remove();
+      
+      lienzo = document.createElement("canvas");
+      lienzo.width = window.innerWidth;
+      lienzo.height = window.innerHeight;
+      lienzo.style.position = "fixed";
+      lienzo.style.top = "0px";
+      lienzo.style.left = "0px";
+      lienzo.style.pointerEvents = "none"; 
+      lienzo.style.zIndex = "1000";
+      
+      const contexto = lienzo.getContext("2d");
+      
+      mapadecalor.forEach(function(punto, index) {
+        const opacidad = 0.1 + (index / mapadecalor.length) * 0.3; 
+        contexto.fillStyle = `rgba(255, ${100 - (index / mapadecalor.length) * 100}, 0, ${opacidad})`;
+        contexto.fillRect(punto[0] - 2, punto[1] - 2, 10, 10);
+      });
+      
+      document.body.appendChild(lienzo);
+    }
+
+    function limpiarMapaCalor() {
+      if(lienzo) {
+        lienzo.remove();
+        lienzo = null;
+      }
+      mapadecalor = [];
+      document.getElementById('contador').textContent = "Puntos registrados: 0";
+    }
+
+    function exportarDatos() {
+      const datos = {
+        totalPuntos: mapadecalor.length,
+        puntos: mapadecalor,
+        fecha: new Date().toISOString()
+      };
+      
+      const blob = new Blob([JSON.stringify(datos, null, 2)], {type: 'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'mapa-calor-datos.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    console.log("Sistema de interacción cargado. Funcionalidades:");
+    console.log("- Arrastre suave con límites");
+    console.log("- Mapa de calor con control de memoria");
+    console.log("- Exportación de datos de interacción");
+  </script>
+</body>
+</html>

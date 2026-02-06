@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <title>Graficas de VideoJuegos</title>
+      <style>
+          table{
+            font-family:sans-serif;
+          }
+          table td:first-child{
+            text-align:right;
+          }
+          .barra{
+            min-width:0px;
+            height:10px;
+            background:blue;
+            border-radius:5px;
+            padding:5px;
+            color:white;
+            font-size:10px;
+            line-height:10px;
+            font-weight:bold;
+            font-style: italic;
+          }
+          .grafica3,
+          .grafica4 {
+            margin-bottom: 100px;
+          }
+
+      </style>
+  </head>
+  <body>
+    <h3>Juegos más populares en Europa</h3>
+    <div class="grafica1"></div>
+    <h3>Tiempo promedio jugado al mes</h3>
+    <div class="grafica2"></div>
+    <h3>Horas de entrenamiento</h3>
+    <div class="grafica3"></div>
+    <h3>Animes mas populares</h3>
+    <div class="grafica4"></div>
+
+      <script>
+            let datos1 = [
+        {
+          "Etiqueta":"League of Legends",
+          "Valor":400
+        },
+        {
+          "Etiqueta":"Valorant",
+          "Valor":100
+        },
+        {
+          "Etiqueta":"CoD",
+          "Valor":200
+        },
+        {
+          "Etiqueta":"Fortnite",
+          "Valor":300
+        },
+        {
+          "Etiqueta":"Minecraft",
+          "Valor":100
+        }
+      ]
+      let datos2 = [
+          {
+            "Etiqueta": "Enero",
+            "Valor": 300
+          },
+          {
+            "Etiqueta": "Febrero",
+            "Valor": 250
+          },
+          {
+            "Etiqueta": "Marzo",
+            "Valor": 50
+          },
+          {
+            "Etiqueta": "Abril",
+            "Valor": 100
+          },
+          {
+            "Etiqueta": "Mayo",
+            "Valor": 200
+          }
+        ]
+
+      
+      let datos3 = [
+          {
+            "Etiqueta": "Pecho",
+            "Valor": 100
+          },
+          {
+            "Etiqueta": "Espalda",
+            "Valor": 100
+          },
+          {
+            "Etiqueta": "Hombro",
+            "Valor": 40
+          },
+          {
+            "Etiqueta": "Biceps",
+            "Valor": 60
+          },
+          {
+            "Etiqueta": "Triceps",
+            "Valor": 60
+          }
+        ]
+
+      
+      let datos4 = [
+          {
+            "Etiqueta": "Chainsaw man",
+            "Valor": 400
+          },
+          {
+            "Etiqueta": "Jujutsu Kaisen",
+            "Valor": 350
+          },
+          {
+            "Etiqueta": "Naruto",
+            "Valor": 600
+          },
+          {
+            "Etiqueta": "Boku no hero",
+            "Valor": 200
+          },
+          {
+            "Etiqueta": "One Piece",
+            "Valor": 550
+          }
+        ]
+        
+        function graficaBarras(selector,misdatos,color){
+      
+        let grafica = document.querySelector(selector);
+        
+        let tabla = document.createElement("table");
+        grafica.appendChild(tabla)
+        
+        let cabecera = document.createElement("thead");
+        tabla.appendChild(cabecera)
+        
+        let filacabecera = document.createElement("tr");
+        filacabecera.innerHTML = "<th>Valor</th>"
+        cabecera.appendChild(filacabecera)
+        
+        let cuerpo = document.createElement("tbody");
+        tabla.appendChild(cuerpo);
+        
+        misdatos.forEach(function(dato){
+
+          let fila = document.createElement("tr")
+          cuerpo.appendChild(fila);
+           
+          let valor = document.createElement("td")
+          valor.textContent = dato.Valor
+          fila.appendChild(valor)
+          
+          let contienebarra = document.createElement("td")
+          let barra = document.createElement("div")
+          barra.classList.add("barra")
+          barra.textContent = dato.Etiqueta
+          barra.style.width = dato.Valor+"px"
+          barra.style.backgroundColor = color
+          contienebarra.appendChild(barra)
+          
+          fila.appendChild(contienebarra)
+          
+        })
+      }
+      
+      graficaBarras(".grafica1",datos1,"cyan")
+      graficaBarras(".grafica2",datos2,"red")
+      graficaBarras(".grafica3",datos3,"pink")
+      graficaBarras(".grafica4",datos4,"black")
+    </script>
+  </body>
+</html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+  <meta charset="utf-8" />
+  <title>Speech Recognition (mínimo)</title>
+  <button id="start">🎙️ Escuchar</button>
+  <div id="out"></div>
+  <div id="contenedor"></div>
+  <script> 
+    clientes = [
+      {"nombre":"Miguel Angel","apellidos":"Vargas Rodriguez","email":"migue@varro.com"},
+      {"nombre":"Eric","apellidos":"Campos","email":"eric@camp.com"},
+      {"nombre":"Betlem","apellidos":"Codina","email":"bet@comar.com"}
+    ]
+    
+    function pintaTabla(){
+      let cadena = "<table><tr><th>Nombre</th><th>Apellidos</th><th>Email</th></tr>"
+      clientes.forEach(function(cliente){
+        cadena += "<tr><td>"+cliente.nombre+"</td><td>"+cliente.apellidos+"</td><td>"+cliente.email+"</td></tr>"
+      })
+      cadena += "</table>"
+      document.querySelector("#contenedor").innerHTML = cadena
+    }
+    pintaTabla()
+    let voices = [];
+    function pickVoice() {
+      const v = voices.find(v => /es-|Spanish/i.test(v.lang)) || voices[0];
+      return v || null;
+    }
+    function loadVoices() {
+      voices = speechSynthesis.getVoices();
+    }
+    loadVoices();
+    speechSynthesis.onvoiceschanged = loadVoices;
+  
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const rec = new SpeechRecognition();
+    rec.lang = "es-ES";
+    rec.interimResults = false;
+    
+    rec.onresult = function(e){ 
+      let reconocido = e.results[0][0].transcript
+      document.getElementById("out").textContent = reconocido;
+      
+      const u = new SpeechSynthesisUtterance(reconocido);
+      const v = pickVoice();
+      if (v) u.voice = v;
+      u.lang = (v && v.lang) || 'es-ES';
+      speechSynthesis.cancel(); 
+      speechSynthesis.speak(u);
+      var operacion = reconocido.split(" ")[0]
+      switch(operacion){
+         case "eliminar":
+          console.log("Vamos a eliminar");
+          let numero = reconocido.split(" ")[1]
+          switch(numero){
+            case "cero":clientes.splice(0,1);break;
+            case "uno":clientes.splice(1,1);break;
+            case "dos":clientes.splice(2,1);break;
+            case "tres":clientes.splice(3,1);break;
+            case "cuatro":clientes.splice(4,1);break;
+            case "cinco":clientes.splice(5,1);break;
+          }
+          pintaTabla()
+          break;
+         case "insertar":console.log("Vamos a insertar");break;
+         case "actualizar":console.log("Vamos a actualizar");break;
+         case "leer":console.log("Vamos a leer");break;
+      }
+      
+    }
+    
+    document.getElementById("start").onclick = () => rec.start();
+  </script>
+</html>
