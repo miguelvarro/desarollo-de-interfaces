@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>miguel | var - Editor de diagramas</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="toolbar">
+    <div class="brand">
+      <span class="brand-main">miguel</span>
+      <span class="brand-separator">|</span>
+      <span class="brand-variant">var</span>
+    </div>
+
+    <div class="toolbar-section-label">Formas</div>
+    <div class="tool" draggable="true" data-shape="rectangle">Rectángulo</div>
+    <div class="tool" draggable="true" data-shape="pill">Píldora</div>
+    <div class="tool" draggable="true" data-shape="circle">Círculo</div>
+    <div class="tool" draggable="true" data-shape="diamond">Rombo</div>
+    <div class="tool" draggable="true" data-shape="parallelogram">Paralelogramo</div>
+    <div class="tool" draggable="true" data-shape="note">Nota</div>
+    <div class="tool" draggable="true" data-shape="cloud">Nube</div>
+    <div class="tool" draggable="true" data-shape="hex">Hexágono</div>
+    <div class="tool" draggable="true" data-shape="star">Estrella</div>
+
+    <div class="toolbar-section-label">Conexiones</div>
+    <div class="tool" data-shape="arrow">Flecha →</div>
+    <div class="tool" data-shape="bidirectional">↔ Bidireccional</div>
+
+    <div class="toolbar-section-label">Opciones</div>
+    <button id="toggleRouteBtn" class="secondary" type="button">
+      Ruta: recta
+    </button>
+    <div class="hint">
+      <div><kbd>Esc</kbd> salir modo flecha</div>
+      <div><kbd>Supr</kbd> borrar selección</div>
+      <div><kbd>Doble click</kbd> editar texto</div>
+    </div>
+
+    <div class="toolbar-section-label">Diagrama</div>
+    <button id="saveBtn" type="button">Guardar diagrama</button>
+    <button id="uploadBtn" class="secondary" type="button">Cargar diagrama</button>
+    <input type="file" id="uploadInput" accept=".json" style="display:none;" />
+  </div>
+
+  <div class="stage-wrapper">
+    <div class="stage-header">
+      <span class="stage-title">Lienzo</span>
+      <span class="stage-subtitle">Arrastra, conecta y anota tus ideas</span>
+    </div>
+    <div class="stage" id="stage"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
