@@ -1,0 +1,26 @@
+[
+    {
+        "imagen": "foto1.jpg",
+        "error": "[Errno 2] No such file or directory: 'foto1.jpg'"
+    },
+    {
+        "imagen": "foto2.jpg",
+        "error": "[Errno 2] No such file or directory: 'foto2.jpg'"
+    },
+    {
+        "imagen": "foto3.jpg",
+        "error": "[Errno 2] No such file or directory: 'foto3.jpg'"
+    },
+    {
+        "imagen": "foto4.jpg",
+        "error": "[Errno 2] No such file or directory: 'foto4.jpg'"
+    },
+    {
+        "imagen": "foto5.jpg",
+        "error": "[Errno 2] No such file or directory: 'foto5.jpg'"
+    },
+    {
+        "imagen": "foto6.jpg",
+        "error": "[Errno 2] No such file or directory: 'foto6.jpg'"
+    }
+]
